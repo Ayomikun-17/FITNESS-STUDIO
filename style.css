@@ -1,0 +1,225 @@
+/* ===== Globals ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Swap these for the group's shared variables when merging */
+  --color-bg: #0f1115;
+  --color-surface: #1a1d24;
+  --color-surface-alt: #14171d;
+  --color-text: #f2f3f5;
+  --color-muted: #a3a9b5;
+  --color-accent: #ff5a36;
+  --color-accent-dark: #d9411f;
+  --color-border: #2c313b;
+
+  --radius: 14px;
+  --space: 1rem;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+img { max-width: 100%; height: auto; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ===== Preview shell (header/footer) ===== */
+.site-header nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: var(--space);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header a { color: var(--color-text); text-decoration: none; font-weight: 600; }
+.site-header a:hover { color: var(--color-accent); }
+
+.site-footer {
+  text-align: center;
+  padding: 2rem var(--space);
+  color: var(--color-muted);
+}
+
+/* ===== Sections ===== */
+.section {
+  padding: 4rem var(--space);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section--alt {
+  max-width: none;
+  background: var(--color-surface-alt);
+}
+.section--alt > * {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.section__title {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
+}
+.section__intro {
+  margin: 0 0 2.5rem;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+/* ===== TRAINERS: CSS Grid ===== */
+.trainer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1.5rem;
+}
+
+.trainer-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* clips the photo to the rounded corners */
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.trainer-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+}
+
+.trainer-card__photo {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;           /* crop to fit, never stretch */
+  object-position: center 30%; /* keep the interesting part in frame */
+  border-bottom: 3px solid var(--color-accent);
+}
+
+.trainer-card__body {
+  flex-grow: 1;
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.trainer-card__name { margin: 0; font-size: 1.2rem; }
+.trainer-card__role {
+  margin: 0.15rem 0 0.75rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.trainer-card__bio { margin: 0 0 1rem; color: var(--color-muted); font-size: 0.95rem; }
+.trainer-card__tag {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* ===== PRICING: Flexbox ===== */
+.pricing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+.pricing-card {
+  flex: 1 1 260px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+}
+
+.pricing-card--featured {
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 10px 30px rgba(255, 90, 54, 0.15);
+}
+
+.pricing-card__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0.2rem 0.9rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pricing-card__name { margin: 0 0 0.5rem; font-size: 1.3rem; }
+.pricing-card__price { margin: 0 0 1.25rem; color: var(--color-muted); }
+.pricing-card__amount { font-size: 2.5rem; font-weight: 800; color: var(--color-text); }
+
+.pricing-card__features {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  flex-grow: 1; /* pushes the button to the bottom so all cards line up */
+}
+.pricing-card__features li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.pricing-card__features li::before {
+  content: "\2713";
+  margin-right: 0.6rem;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: block;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 10px;
+  color: var(--color-accent);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.btn:hover,
+.btn:focus-visible { background: var(--color-accent); color: #fff; }
+.btn--solid { background: var(--color-accent); color: #fff; }
+.btn--solid:hover,
+.btn--solid:focus-visible { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
+
+/* ===== Small screens ===== */
+@media (max-width: 600px) {
+  .section { padding: 3rem var(--space); }
+  .pricing-card { max-width: none; }
+}
